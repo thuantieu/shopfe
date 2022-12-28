@@ -1,10 +1,17 @@
 <template>
   <v-container>
-    
+    <!-- <v-row dense> -->
+    <!-- <v-overlay
+          
+        >
+        <v-defaults-provider :defaults="defaults">
+        <v-card title="Title" subtitle="Subtitle" class="ma-10"></v-card>
+      </v-defaults-provider>
+        </v-overlay> -->
+    <!-- </v-row> -->
     <v-row dense>
       <v-col>
         <h1>{{ title }}</h1>
-        <!-- <v-btn @click="getState">Get Id</v-btn> -->
         <v-divider></v-divider> <br />
         <div class="float-left" v-for="item in pList" :key="item.id">
           <Card
@@ -19,49 +26,15 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <h1>Cart</h1>
-        <v-divider></v-divider> <br />
-        <div v-show="tAmount > 0">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th colspan="2">Quantity</th>
-    
-                  <th>Amount</th>
-                </tr>
-              </thead>
-    
-              <tbody v-for="item in cart" :key="item.id">
-                <tr>
-                  <td>{{ item.PID }}</td>
-                  <td>{{ item.Name }}</td>
-                  <td>{{ item.Price }}</td>
-                  <td>
-                    {{ item.Quantity }}
-                  </td>
-                  <td>
-                    <v-btn color="red-lighten-2" size="small" @click="handleAdd(item.PID)"><b>+</b></v-btn> <br>
-                    <v-btn color="blue-lighten-2" size="small" @click="handleRemove(item.PID)"><b>-</b></v-btn>
-                  </td>
-                  <td>{{ item.Amount }}</td>
-                </tr>
-              </tbody>
-            </table> <br>
-             
-            <h2>Total amount: {{ getTotalAmount }} &euro;</h2>
-            <v-btn color="green"> Send Order </v-btn>
-        </div>
+        <CartVue />
       </v-col>
     </v-row>
-    <!-- {{ pList }} -->
   </v-container>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
+import CartVue from "./Cart.vue";
 
 export default {
   name: "HomePage",
@@ -70,52 +43,51 @@ export default {
   },
   data: () => {
     return {
+      // defaults: {
+      //   global: {
+      //     elevation: 10,
+      //   },
+      //   VCard: {
+      //     color: "cyan-lighten-4",
+      //   },
+      // },
+      
       productId: "",
       pList: [],
       cart: [],
-      tAmount: 0
+      tAmount: 0,
     };
   },
   methods: {
     getState() {
       console.log(this.productId);
     },
-    handleAdd (id) {
-        this.cart.forEach(element => {
-            element.Quantity = element.PID === id
-            ? element.Quantity += 1
-            : element.Quantity
+    // handleAdd(id) {
+    //   this.cart.forEach((element) => {
+    //     element.Quantity =
+    //       element.PID === id ? (element.Quantity += 1) : element.Quantity;
 
-            element.Amount = Number(element.Quantity) * Number(element.Price) 
-        });
-    },
+    //     element.Amount = Number(element.Quantity) * Number(element.Price);
+    //   });
+    // },
 
-    handleRemove (id) {
-        this.cart.forEach(element => {
-            element.Quantity = element.PID === id
-            ? element.Quantity -= 1
-            : element.Quantity
-            element.Amount = Number(element.Quantity) * Number(element.Price) 
-            
-        });
+    // handleRemove(id) {
+    //   this.cart.forEach((element) => {
+    //     element.Quantity =
+    //       element.PID === id ? (element.Quantity -= 1) : element.Quantity;
+    //     element.Amount = Number(element.Quantity) * Number(element.Price);
+    //   });
 
-        this.cart = this.cart.filter(c => c.Quantity !== 0)
-    },
+    //   this.cart = this.cart.filter((c) => c.Quantity !== 0);
+    // },
     handleProduct(s) {
       this.productId = s.PID;
-
-      //   this.cart.push({
-      //       PID: s.PID,
-      //       Name: s.Name,
-      //       Price: s.Price,
-      //       Quantity: 1,
-      //       Amount: Number(s.Price),
-      //     });
-
-      if (this.cart.length > 0) {
-        let orderedProduct = this.cart.find((c) => this.productId === c.PID);
+      if (this.$store.state.cart.length > 0) {
+        let orderedProduct = this.$store.state.cart.find(
+          (c) => this.productId === c.PID
+        );
         if (!orderedProduct) {
-          this.cart.push({
+          this.$store.dispatch("addToCart", {
             PID: s.PID,
             Name: s.Name,
             Price: s.Price,
@@ -124,7 +96,7 @@ export default {
           });
         }
       } else {
-        this.cart.push({
+        this.$store.dispatch("addToCart", {
           PID: s.PID,
           Name: s.Name,
           Price: s.Price,
@@ -141,20 +113,20 @@ export default {
     products() {
       return this.$store.state.productList;
     },
-    getTotalAmount () {
-        this.tAmount = 0
-        this.cart.forEach(element => {
-            this.tAmount += element.Amount
-        });
-        return this.tAmount
-    }
+    // getTotalAmount() {
+    //   this.tAmount = 0;
+    //   this.cart.forEach((element) => {
+    //     this.tAmount += element.Amount;
+    //   });
+    //   return this.tAmount;
+    // },
   },
   created() {
     this.pList = this.$store.state.productList;
-    console.log(this.cart);
   },
   components: {
     Card,
+    CartVue,
   },
 };
 </script>
