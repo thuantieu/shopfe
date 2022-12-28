@@ -13,14 +13,14 @@
       <v-col>
         <h1>{{ title }}</h1>
         <v-divider></v-divider> <br />
-        <div class="float-left" v-for="item in pList" :key="item.id">
+        <div class="float-left" v-for="item in products" :key="item.id">
           <Card
-            :PID="item.id"
-            :Source="item.image"
-            :Name="item.name"
-            :Size="item.size"
-            :Price="item.price"
-            :Description="item.manufacture"
+            :PID="item.Id"
+            :Source="item.Image__c"
+            :Name="item.Name"
+            :Size="item.Size__c"
+            :Price="item.Price__c"
+            :Description="item.Description__c"
             @product-detail="handleProduct"
           />
         </div>

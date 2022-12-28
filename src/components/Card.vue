@@ -1,7 +1,7 @@
 <template>
-  <v-card class="mr-2 mb-2" max-width="200px">
+  <v-card class="mr-3 mb-3" width="150px" :elevation="10">
     <!-- <v-img src="@/sampledata/ball1.jpg" height="40%" cover></v-img> -->
-    <v-img :src="Source" height="110px" cover></v-img>
+    <v-img :src="Source" height="110px" width="150px" cover></v-img>
 
     <v-card-title>
       {{ Name }}
@@ -9,11 +9,11 @@
 
     <v-card-subtitle>
       Size: {{ Size }} <br />
-      Price: {{ Price }}</v-card-subtitle
+      Price: {{ Price }} &euro;</v-card-subtitle
     >
 
     <v-card-actions>
-      <v-btn color="red-darken-2" @click="getPid"> Add to cart </v-btn>
+      <v-btn icon="mdi-cart" color="red-darken-2" @click="getPid"></v-btn>
       <br />
 
       <v-spacer></v-spacer>

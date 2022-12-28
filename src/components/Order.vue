@@ -3,10 +3,13 @@
     <div :elevation="10">
       <h1>Order summary</h1>
        <br />
+       <h2>Customer Name:</h2>
+       <v-text-field required ref="input" v-model="customerName"></v-text-field>
+       <h2>Chosen products: </h2>
       <v-table>
         <thead>
           <tr>
-            <th class="text-left">ID</th>
+            <!-- <th class="text-left">ID</th> -->
             <th class="text-left">Name</th>
             <th class="text-left">Price</th>
             <th class="text-left">Quantity</th>
@@ -15,7 +18,7 @@
         </thead>
         <tbody v-for="item in getCart" :key="item.id">
           <tr>
-            <td class="text-left">{{ item.PID }}</td>
+            <!-- <td class="text-left">{{ item.PID }}</td> -->
             <td class="text-left">{{ item.Name }}</td>
             <td class="text-left">{{ item.Price }}</td>
             <td class="text-left">
@@ -24,9 +27,9 @@
             <td class="text-left">{{ item.Amount }}</td>
           </tr>
         </tbody>
-      </v-table>
+      </v-table> <br>
       <h2>Total amount: {{ getTotalAmount }} &euro;</h2>
-      <v-btn color="green"> Send Order </v-btn>
+      <v-btn color="green" @click="sendOrder"> Send Order </v-btn>
       <v-btn color="red" @click="cancelOrder"> Cancel Order </v-btn>
     </div>
   </v-container>
@@ -37,6 +40,7 @@ export default {
   name: "Order",
   data() {
     return {
+      customerName: '',
       cart: [],
       tAmount: 0,
     };
@@ -55,6 +59,9 @@ export default {
     },
   },
   methods: {
+    sendOrder () {
+      console.log(this.customerName);
+    },
     cancelOrder() {
       this.cart = [];
       this.$store.dispatch("updateCart", this.cart);

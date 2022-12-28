@@ -5,7 +5,7 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
+          <!-- <th>ID</th> -->
           <th>Name</th>
           <th>Price</th>
           <th colspan="2">Quantity</th>
@@ -16,7 +16,7 @@
 
       <tbody v-for="item in getCart" :key="item.id">
         <tr>
-          <td>{{ item.PID }}</td>
+          <!-- <td>{{ item.PID }}</td> -->
           <td>{{ item.Name }}</td>
           <td>{{ item.Price }}</td>
           <td>

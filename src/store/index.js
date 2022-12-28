@@ -4,7 +4,8 @@ export default createStore({
   state: {
     appTitle: "Product List",
     productList: [],
-    cart: []
+    cart: [],
+    token: {}
   },
   getters: {},
   mutations: {
@@ -14,6 +15,9 @@ export default createStore({
     fetchCart(state, payload) {
       state.cart = payload;
     },
+    pushToken(state, payload) {
+      state.token = payload
+    }
   },
   actions: {
     addproductList(context, payload) {
@@ -36,6 +40,11 @@ export default createStore({
       cartList = [];
       context.commit("fetchCart", cartList);
     },
+    getTokent(context, payload) {
+      let token = context.state.token
+      token = payload
+      context.commit("pushToken", token)
+    }
   },
   modules: {},
 });
