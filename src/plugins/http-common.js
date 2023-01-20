@@ -7,14 +7,3 @@ export const HTTP = axios.create({
   }
   
 })
-
-// export const HTTP = axios.create({
-//   baseURL: `${process.env.VUE_APP_API_AUTH_URL}`,
-//   params: {
-//     "grant_type": `password`,
-//     "client_id": `${process.env.VUE_APP_API_CLIENT_ID}`,
-//     "client_secret": `${process.env.VUE_APP_API_CLIENT_SECRET}`,
-//     "username": "albert_tieu\@yahoo.com",
-//     "password": `${process.env.VUE_APP_API_PASSWORD}`
-//   }
-// })

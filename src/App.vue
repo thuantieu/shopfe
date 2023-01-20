@@ -38,10 +38,6 @@ export default {
       }
     }).then(response => {
       this.$store.dispatch("addproductList", response.data);
-      setTimeout(() => {
-        
-        console.log(this.$store.state.productList);
-      }, 1000);
     })
 
   },
